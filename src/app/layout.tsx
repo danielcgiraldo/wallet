@@ -1,29 +1,22 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import { Author } from 'next/dist/lib/metadata/types/metadata-types'
+"use client";
+import { Inter } from "next/font/google";
+import { AuthContextProvider } from '@/lib/firebase/auth/AuthContext'
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] })
-
-const author: Author = {
-    name: 'Daniel Castillo',
-    url: "https://idaniel.dev"
-}
-
-export const metadata: Metadata = {
-  title: 'Wallet | Manage your money smartly',
-  description: 'Wallet is a web app that helps you manage your money smartly.',
-  authors: [author]
-}
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode
+    children: React.ReactNode;
 }) {
-  return (
-    <html lang="es">
-      <body className={inter.className}>{children}</body>
-    </html>
-  )
+    return (
+        <html lang="es">
+            <head></head>
+            <body className={inter.className}>
+                <AuthContextProvider>{children}</AuthContextProvider>
+                <div id="recaptcha"></div>
+            </body>
+        </html>
+    );
 }
