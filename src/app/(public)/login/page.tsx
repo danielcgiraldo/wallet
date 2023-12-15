@@ -30,7 +30,7 @@ const AuthPage = () => {
                     Wallet <Wallet size={35} />
                 </h1>
                 {form === "check-email" && (
-                    <CheckEmailForm setForm={setForm} setEmail={setEmail} />
+                    <CheckEmailForm setForm={setForm} setEmail={setEmail} email={email} />
                 )}
                 {form === "signin" && (
                     <SignInForm
@@ -74,9 +74,11 @@ export default AuthPage;
 const CheckEmailForm = ({
     setForm,
     setEmail,
+    email
 }: {
     setForm: any;
     setEmail: any;
+    email: string;
 }) => {
     const [loading, setLoading] = useState(false);
 
@@ -121,6 +123,7 @@ const CheckEmailForm = ({
                 <input
                     type="email"
                     name="email"
+                    defaultValue={email}
                     className="w-full pl-4 pt-6 rounded-lg border border-gray-400 pr-8 pb-1.5 text-lg leading-6 outline-blue-500"
                     required
                 />
@@ -138,7 +141,7 @@ const CheckEmailForm = ({
             <div className="gap-2 w-1/2 text-sm mx-auto text-gray-400 flex items-center after:bg-gray-400 after:w-full after:h-px before:bg-gray-400 before:w-full before:h-px">
                 <span>ó</span>
             </div>
-            <button type="button" className="flex gap-2 justify-center w-full rounded-lg border border-gray-400 px-4 py-3 items-center ">
+            <button type="button" className="flex gap-2 bg-white justify-center w-full rounded-lg border border-gray-400 px-4 py-3 items-center ">
                 <Image
                     src="/g-logo.png"
                     alt="Google Logo"

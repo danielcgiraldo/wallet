@@ -1,3 +1,5 @@
+"use client";
+
 import { LoaderIcon } from "lucide-react";
 
 const LoadingComponent = () => {
