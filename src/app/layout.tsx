@@ -1,6 +1,7 @@
 "use client";
 import { Inter } from "next/font/google";
 import { AuthContextProvider } from '@/lib/firebase/auth/AuthContext'
+import React from "react";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
