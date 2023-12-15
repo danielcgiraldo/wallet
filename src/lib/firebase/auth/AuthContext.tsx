@@ -1,41 +1,35 @@
-"use client";
-
+// Importing only necessary functions from the Firebase auth module
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import {
-    onAuthStateChanged,
-    getAuth,
-} from 'firebase/auth';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import firebase_app from '@/lib/firebase/config';
 import LoadingComponent from '@/components/loading';
 
-const auth = getAuth(firebase_app);
-
-export const AuthContext = createContext({});
+// Using the correct type for createContext
+export const AuthContext = createContext<{ user: any }>({ user: null });
 
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({
-    children,
-}: {children: ReactNode}) => {
-    const [user, setUser] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser(user);
-            } else {
-                setUser(null);
-            }
-            setLoading(false);
-        });
+  useEffect(() => {
+    const auth = getAuth(firebase_app);
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      setUser(authUser);
+      setLoading(false);
+    });
 
-        return () => unsubscribe();
-    }, []);
+    return () => unsubscribe();
+  }, []); // Dependency array is empty because we only want this effect to run once
 
-    return (
-        <AuthContext.Provider value={{ user }}>
-            {loading ? <LoadingComponent /> : children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{ user }}>
+      {loading ? <LoadingComponent /> : children}
+    </AuthContext.Provider>
+  );
 };
