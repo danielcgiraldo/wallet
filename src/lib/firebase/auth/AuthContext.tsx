@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode } from 'react';
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import {
     onAuthStateChanged,
     getAuth,
@@ -10,17 +10,17 @@ import LoadingComponent from '@/components/loading';
 
 const auth = getAuth(firebase_app);
 
-export const AuthContext = React.createContext({});
+export const AuthContext = createContext({});
 
-export const useAuthContext = () => React.useContext(AuthContext);
+export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({
     children,
 }: {children: ReactNode}) => {
-    const [user, setUser] = React.useState<any>(null);
-    const [loading, setLoading] = React.useState(true);
+    const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
